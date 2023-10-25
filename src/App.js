@@ -3,13 +3,14 @@ import { FiSearch } from 'react-icons/fi';
 import './style.css'
 import api from './services/api';
 
+
 function App() {
   const [input, setInput]= useState('');
   const [cep, setCep]= useState({});
 
 async function buscarcep(){
    if(input === ''){
-    alert("oi")
+    alert("Preencha o CEP.")
     return;
      }
       try{
@@ -17,7 +18,7 @@ async function buscarcep(){
       setCep(response.data);
       setInput('');
      }catch{
-      alert('erro')
+    alert('Erro, CEP não localizado.')
       setInput('');
       }
 }
@@ -46,9 +47,25 @@ async function buscarcep(){
 {Object.keys(cep).length > 0 && (
  <main className='main'>
       <h2>CEP: {cep.cep}</h2>
-      <span>Rua: {cep.logradouro} </span>
-      <span>Complemento: {cep.complemento}</span> 
-      <span>Bairro: {cep.bairro}</span>
+    
+{
+  Object.keys(cep.logradouro).length > 0 &&(
+<span>Rua: {cep.logradouro} </span>
+  )
+}
+
+{
+  Object.keys(cep.complemento).length > 0 &&(
+    <span>Complemento: {cep.complemento}</span> 
+  )
+}
+
+{
+  Object.keys(cep.bairro).length > 0 &&(
+ <span>Bairro: {cep.bairro}</span>
+  )
+} 
+     
       <span>Cidade: {cep.localidade} - {cep.uf}</span>
   </main>
 )}
